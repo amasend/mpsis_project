@@ -1,0 +1,52 @@
+library(leaflet)
+
+# Choices for drop-downs
+vars <- c(
+  'Price' = 'price'
+)
+
+navbarPage("Trip search optimalizator", id="nav",
+
+  tabPanel("Interactive map",
+    div(class="outer",
+
+      tags$head(
+        # Include our custom CSS
+        includeCSS("styles.css"),
+        includeScript("gomap.js")
+      ),
+
+      # If not using custom CSS, set height of leafletOutput to a number instead of percent
+      leafletOutput("map", width="100%", height="100%"),
+
+      # Shiny versions prior to 0.11 should use class = "modal" instead.
+      absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
+        draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
+        width = 330, height = "auto",
+
+        h2("Trip search"),
+
+        selectInput("color", "Color", vars),
+        selectInput("size", "Size", vars, selected = "price"),
+        textInput("airport", "IATA code of origin airport ", "PRG"),
+        h3("Departure date range"),
+        h5("From date:"),
+        div(style="display:inline-block",textInput("day", "Day", "1", width=70, value=10)),
+        div(style="display:inline-block",textInput("month", "Month", "1", width=70, value=10)),
+        div(style="display:inline-block",textInput("year", "Year", "1", width=70, value=2018)),
+        h5("To date:"),
+        div(style="display:inline-block",textInput("day_to", "Day", "1", width=70, value=11)),
+        div(style="display:inline-block",textInput("month_to", "Month", "1", width=70, value=10)),
+        div(style="display:inline-block",textInput("year_to", "Year", "1", width=70, value=2018)),
+        numericInput("price_threshold", "Maximum overall price in EUR", 100),
+        actionButton("compute", "Compute best route", icon("refresh")),
+        textOutput("test")
+      ),
+
+      tags$div(id="cite",
+        'Data taken from ', tags$em('https://www.kiwi.com/us/'), 'App created by ...'
+      )
+    )
+  ),
+  conditionalPanel("false", icon("crosshair"))
+)
