@@ -1,5 +1,13 @@
 # Flight_search
 
+# Usage
+App is inside of the docker contener.
+Download contener and run it by typing:
+  docker run -p 3838:3838 amasend/shinyapp:version2  
+Then go to:
+  http://localhost:3838/mpsis_project/demo/
+App should load to your browser.
+
 ***Project done in Shiny.***
 1. User can specify departure airport by putting IATA code of airport.
 2. User can specify start search date and end search date (the time between dates is user trip time planned).
