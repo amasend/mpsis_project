@@ -3,6 +3,11 @@
 Application allowes user to find the best flight trip. (the best in the meaning of cost).
 Some features need to be implemented. Application is under development.
 
+Demo version available on:  
+https://amasend.shinyapps.io/Flight_search/  
+Shinyapps doesn't allow API connections. This is the reason why fetching data from Kiwi servers doesn't work properly.
+Demo allows to see only visualization of flight data.
+
 # Usage
 App is inside of the docker contener.
 Download contener and run it by typing:  
