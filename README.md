@@ -3,9 +3,9 @@
 # Usage
 App is inside of the docker contener.
 Download contener and run it by typing:  
-  docker run -p 3838:3838 amasend/shinyapp:version2
+docker run -p 3838:3838 amasend/shinyapp:version2  
 Then go to:  
-  http://localhost:3838/mpsis_project/demo/
+http://localhost:3838/mpsis_project/demo/  
 App should load to your browser.
 
 ***Project done in Shiny.***
