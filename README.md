@@ -1,4 +1,7 @@
 # Flight_search
+**Description***
+Application allowes user to find the best flight trip. (the best in the meaning of cost).
+Some features need to be implemented. Application is under development.
 
 # Usage
 App is inside of the docker contener.
