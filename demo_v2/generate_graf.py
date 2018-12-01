@@ -36,7 +36,7 @@ data['route_id'] = data.index
 for i, z in enumerate(list(set((data['From'] + data['To']).tolist()))):
     data.loc[(data['From'] == z[:3]) & (data['To'] == z[3:]), ['route_id']] = i
 # create dataframe only with start city and all the connections from it
-stage_1 = data.loc[(data['From'] == 'KRK') & (data['year'] == year) & (data['month'] == month) & (data['day'] == day) & (data['Cost'] <= max_cost)]
+stage_1 = data.loc[(data['From'] == start_citie) & (data['year'] == year) & (data['month'] == month) & (data['day'] == day) & (data['Cost'] <= max_cost)]
 
 # create rest dataframes (with transit cities)
 stages = [stage_1]
