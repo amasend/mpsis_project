@@ -63,6 +63,9 @@ function(input, output, session) {
   })
   
   observeEvent(input$compute, {
+    cityFrom <- data.frame(city = as.character(IANA_codes[IANA_codes[, 'name'] == input$city_airport,]$code),
+                           latitude = as.numeric(IANA_codes[IANA_codes[, 'name'] == input$city_airport,]$lat),
+                           longitude = as.numeric(IANA_codes[IANA_codes[, 'name'] == input$city_airport,]$lon))
     shinyalert("Searching...", "Now, our minions are searching the best trip for you! Please be patient and wait for their result, if you want to check the progress see the right down corner :)", type = "info")
     # Create a Progress object
     progress <- shiny::Progress$new()
