@@ -123,8 +123,8 @@ function(input, output, session) {
     # Update map
     leafletProxy("map", data = zipdata) %>%
       clearShapes() %>%
-      clearMarkers() %>%
-      addMarkers(lng = cityFrom$longitude, lat = cityFrom$latitude) %>%
+      # clearMarkers() %>%
+      # addMarkers(lng = cityFrom$longitude, lat = cityFrom$latitude) %>%
       addCircles(~longitude, ~latitude, radius=radius, layerId=row.names(data),
                  stroke=FALSE, fillOpacity=0.4, fillColor=pal(colorData)) %>%
       addPolylines(lng = lng, lat = lat) %>%
