@@ -5,15 +5,15 @@ Some features need to be implemented. Application is under development.
 
 Demo version available on:  
 https://amasend.shinyapps.io/Flight_search/  
-Shinyapps doesn't allow API connections. This is the reason why fetching data from Kiwi servers doesn't work properly.
-Demo allows to see only visualization of flight data.
+Shinyapps doesn't allow python scripts to be run. This is the reason why demo is not fully rowking on shinyapps.io servers.
+Demo allows to see only visualization of flights data.
 
 # Usage
 App is inside of the docker contener.
 Download contener and run it by typing:  
-docker run -p 3838:3838 amasend/shinyapp:version2  
+docker run -p 3838:3838 amasend/shinyapp:version3  
 Then go to:  
-http://localhost:3838/mpsis_project/demo/  
+http://localhost:3838/mpsis_project/demo_v3/  
 App should load to your browser.
 
 ***Project done in Shiny.***
