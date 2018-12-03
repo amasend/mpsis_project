@@ -34,9 +34,19 @@ month = int(sys.argv[6])
 day = int(sys.argv[7])
 
 data['route_id'] = data.index
+
+def remove_duplicate_route(data):
+    for i in data:
+        x = i[3:]+i[:3]
+        if x in data:
+            data.remove(x)
+lista = list(set((data['From'] + data['To']).tolist()))
+remove_duplicate_route(lista)
+
 # add route_id
-for i, z in enumerate(list(set((data['From'] + data['To']).tolist()))):
+for i, z in enumerate(lista):
     data.loc[(data['From'] == z[:3]) & (data['To'] == z[3:]), ['route_id']] = i
+    data.loc[(data['From'] == z[3:]) & (data['To'] == z[:3]), ['route_id']] = i
 # create dataframe only with start city and all the connections from it
 stage_1 = data.loc[(data['From'] == start_citie) & (data['year'] == year) & (data['month'] == month) & (data['day'] == day) & (data['Cost'] <= max_cost)]
 
