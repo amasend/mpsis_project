@@ -28,4 +28,6 @@ Linear Programming for compute best -> the lease cost EUR consuming trip.
 1. Circles - airports
 2. Size of a circle - (bigger - bigger cost, lower - lower cost) from current home airport
 3. Colour of a cirlce - (Red - cost above user maximum cost, Blue - cost below user maximum cost specified)
+.....
+Not implemented in v3
 4. When you clicked on a circle - user can see actual flight cost (from home airport to clicked one), it also displays airport town name
