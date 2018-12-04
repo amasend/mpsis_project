@@ -11,9 +11,9 @@ Demo allows to see only visualization of flights data.
 # Usage
 App is inside of the docker contener.
 Download contener and run it by typing:  
-docker run -p 3838:3838 amasend/shinyapp:version3  
+docker run -p 3838:3838 amasend/shinyapp:version4  
 Then go to:  
-http://localhost:3838/mpsis_project/demo_v3/  
+http://localhost:3838/mpsis_project/demo_v4/  
 App should load to your browser.
 
 ***Project done in Shiny.***
@@ -28,4 +28,9 @@ Linear Programming for compute best -> the lease cost EUR consuming trip.
 1. Circles - airports
 2. Size of a circle - (bigger - bigger cost, lower - lower cost) from current home airport
 3. Colour of a cirlce - (Red - cost above user maximum cost, Blue - cost below user maximum cost specified)
-4. When you clicked on a circle - user can see actual flight cost (from home airport to clicked one), it also displays airport town name (Not implemented in v3)
+4. When you clicked on a circle - user can see actual flight cost (from home airport to clicked one), it also displays airport town name
+
+Version 4:
+- added popups
+- overall price treshold user control
+- better route visualization
