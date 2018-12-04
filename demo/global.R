@@ -1,4 +1,4 @@
 library(dplyr)
 
-zipdata <- read.csv("data/flights.csv")
-cityFrom <- read.csv("data/cityFrom.csv")
+zipdata <- read.csv("flights.csv")
+cityFrom <- read.csv("cityFrom.csv")
