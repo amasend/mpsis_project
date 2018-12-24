@@ -7,7 +7,7 @@ with open('/home/shiny/graf_err', 'w') as f:
 
 #data = pd.read_csv("data/dane.csv", delimiter=";", names=["From", "To", "year", "month", "day", "Time", "Cost", "From_latitude", #									"From_longitude","To_latitude", 
 #								"To_longitude", "name", "To_city", "To_airport_name"])
-data = pd.read_csv("data/dane_v2.csv", delimiter=";", names=["From", "To", "year", "month", "day", "Time", "Cost", "From_latitude", 									"From_longitude","To_latitude", "To_longitude", "From_city", "From_airport_name", "To_city", "To_airport_name"])
+data = pd.read_csv("data/dane_v2_utf8.csv", delimiter=";", names=["From", "To", "year", "month", "day", "Time", "Cost", "From_latitude", 									"From_longitude","To_latitude", "To_longitude", "From_city", "From_airport_name", "To_city", "To_airport_name"])
 
 data = data.drop(['Time', "From_city", "From_airport_name", "To_city", "To_airport_name"], axis=1)
 
