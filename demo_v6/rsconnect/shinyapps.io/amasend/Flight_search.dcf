@@ -1,0 +1,12 @@
+name: Flight_search
+title: Flight_search
+username:
+account: amasend
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 596695
+bundleId: 1735118
+url: https://amasend.shinyapps.io/Flight_search/
+when: 1543803880.56464
+asMultiple: FALSE
+asStatic: FALSE
