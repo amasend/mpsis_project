@@ -21,7 +21,7 @@ param B{e in E, v in V}, >= 0, default 0;
 param KSI{e in E} >= 0;
 
 /* Decision variables */
-var x{e in E, d in D} >= 0;
+var x{e in E, d in D}, binary, >= 0;
 
 /* Objective function 'z' */
 minimize z: sum{e in E, d in D} KSI[e]*x[e,d];
