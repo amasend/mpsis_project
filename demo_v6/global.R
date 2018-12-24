@@ -8,6 +8,6 @@ zipdata <- read.csv("data/dane_v2_utf8.csv", sep=";", encoding = "UTF-8",
                                   "To_latitude", "To_longitude", "From_city", "From_airport_name", "To_city", "To_airport_name"))
 
 cityFrom <- read.csv("data/cityFrom.csv")
-IANA_codes <- read.csv("IANA_codes_coordinates.csv")
+#IANA_codes <- read.csv("IANA_codes_coordinates.csv")
 #zzz <- read.csv("data/dane.csv", sep=";", col.names = c("From", "To", "Date", "Price"))
 cities_names <- unique(zipdata$From_city)
