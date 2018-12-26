@@ -157,7 +157,8 @@ function(input, output, session) {
             addPopups(cords$lon_to[1:nrow(cords)], cords$lat_to[1:nrow(cords)], pop)
         }
       } else{
-        cmd <- paste("python /home/shiny/matmaFly/matma2.py", input$maximum_cities, input$time_in_city,
+#	max_c = as.numeric(input$maximum_cities) + 1
+	cmd <- paste("python /home/shiny/matmaFly/matma2.py", input$maximum_cities, input$time_in_city,
                      cityFrom$city, input$year, input$month, input$day)
         system(cmd, intern = TRUE)
         progress$inc(1/10, detail = paste("In progress...", 3))
@@ -169,8 +170,7 @@ function(input, output, session) {
         optimal_cost <- read.csv("/home/shiny/matmaFly/optimal_file.sol", col.names = c('total_cost', 'nan'))
         progress$inc(1/10, detail = paste("In progress...", 9))
         cords <- read.csv("/home/shiny/matmaFly/output_modified2.sol", sep=";")
-        # cords <- read.csv("tmp.csv", sep=";")
-        lon_from <- c()
+	lon_from <- c()
         lat_from <- c()
         lon_to <- c()
         lat_to <- c()
@@ -193,7 +193,7 @@ function(input, output, session) {
         lng <- cords$lon_from
         lat <- cords$lat_from
         progress$inc(1/10, detail = paste("In progress...", 10))
-        shinyalert(paste("Total price:", optimal_cost$total_cost, "EUR"), "Now you can go and book your trip!", type = "info")
+	shinyalert(paste("Total price:", optimal_cost$total_cost, "EUR"), "Now you can go and book your trip!", type = "info")        
         # Update map
         
         geo_lines <- gcIntermediate(matrix(c(cords$lon_from, cords$lat_from), ncol=2),
