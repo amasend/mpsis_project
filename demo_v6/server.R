@@ -172,14 +172,24 @@ function(input, output, session) {
         # cords <- read.csv("tmp.csv", sep=";")
         lon_from <- c()
         lat_from <- c()
+        lon_to <- c()
+        lat_to <- c()
         for (i in cords$From){
           lat_from <- c(lat_from, zipdata[which(zipdata$From == i), ]$From_latitude[1])
           lon_from <- c(lon_from, zipdata[which(zipdata$From == i), ]$From_longitude[1])
         }
+        for (i in cords$To){
+          lat_to <- c(lat_to, zipdata[which(zipdata$From == i), ]$From_latitude[1])
+          lon_to <- c(lon_to, zipdata[which(zipdata$From == i), ]$From_longitude[1])
+        }
         cords$lon_from <- lon_from
         cords$lat_from <- lat_from
+        cords$lon_to <- lon_to
+        cords$lat_to <- lat_to
         remove(lon_from)
         remove(lat_from)
+        remove(lon_to)
+        remove(lat_to)
         lng <- cords$lon_from
         lat <- cords$lat_from
         progress$inc(1/10, detail = paste("In progress...", 10))
