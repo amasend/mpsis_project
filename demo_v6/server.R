@@ -6,6 +6,7 @@ library(dplyr)
 library(jsonlite)
 library(shinyalert)
 library(geosphere)
+library(plyr)
 
 set.seed(100)
 
@@ -158,61 +159,70 @@ function(input, output, session) {
         }
       } else{
 #	max_c = as.numeric(input$maximum_cities) + 1
-	cmd <- paste("python /home/shiny/matmaFly/matma2.py", input$maximum_cities, input$time_in_city,
+#	shinyalert(paste("Total price:", cityFrom$city, "EUR"), "Now you can go and book your trip!", type = "info")
+#	pass
+
+	cmd <- paste("python /home/shiny/matmaFly/matma2.py", as.integer(input$maximum_cities)+1, input$time_in_city,
                      cityFrom$city, input$year, input$month, input$day)
         system(cmd, intern = TRUE)
         progress$inc(1/10, detail = paste("In progress...", 3))
         cmd <- paste("glpsol -m /home/shiny/matmaFly/model.mod -d /home/shiny/matmaFly/data.dat -o /home/shiny/matmaFly/myprob.sol")
-        system(cmd, intern = TRUE)
+        glpsol <- system(cmd, intern = TRUE)
         progress$inc(1/10, detail = paste("In progress...", 8))
-        cmd <- paste("python /home/shiny/matmaFly/modify_output_matma.py")
+        cmd <- paste("python /home/shiny/matmaFly/modi_new.py")
         system(cmd, intern = TRUE)
         optimal_cost <- read.csv("/home/shiny/matmaFly/optimal_file.sol", col.names = c('total_cost', 'nan'))
         progress$inc(1/10, detail = paste("In progress...", 9))
         cords <- read.csv("/home/shiny/matmaFly/output_modified2.sol", sep=";")
-	lon_from <- c()
-        lat_from <- c()
-        lon_to <- c()
-        lat_to <- c()
-        for (i in cords$From){
-          lat_from <- c(lat_from, zipdata[which(zipdata$From == i), ]$From_latitude[1])
-          lon_from <- c(lon_from, zipdata[which(zipdata$From == i), ]$From_longitude[1])
-        }
-        for (i in cords$To){
-          lat_to <- c(lat_to, zipdata[which(zipdata$From == i), ]$From_latitude[1])
-          lon_to <- c(lon_to, zipdata[which(zipdata$From == i), ]$From_longitude[1])
-        }
-        cords$lon_from <- lon_from
-        cords$lat_from <- lat_from
-        cords$lon_to <- lon_to
-        cords$lat_to <- lat_to
-        remove(lon_from)
-        remove(lat_from)
-        remove(lon_to)
-        remove(lat_to)
-        lng <- cords$lon_from
-        lat <- cords$lat_from
-        progress$inc(1/10, detail = paste("In progress...", 10))
-	shinyalert(paste("Total price:", optimal_cost$total_cost, "EUR"), "Now you can go and book your trip!", type = "info")        
-        # Update map
-        
-        geo_lines <- gcIntermediate(matrix(c(cords$lon_from, cords$lat_from), ncol=2),
-                                    matrix(c(cords$lon_to, cords$lat_to), ncol=2),
-                                    n=50, 
-                                    addStartEnd=TRUE,
-                                    sp=TRUE)
-        pop <- c()
-        for (row in 1:nrow(cords)) {
-          pop <- c(pop, as.character(tagList(tags$h4(row, "City:", as.character(zipdata[zipdata[, 'From'] == factor(cords[row, ]$To, levels=levels(zipdata$From)), ]$From_city)),
-                                             # tags$h5("Cost: ", cords[row, ]$cost, " EUR"),
-                                             sprintf("Airport: %s", as.character(zipdata[zipdata[, 'From'] == factor(cords[row, ]$To, levels=levels(zipdata$From)), ]$From_airport_name)),
-                                     tags$br())))
-        }
-        
-        leafletProxy("map", data = zipdata) %>%
-          clearShapes() %>%
-          addPolylines(data=geo_lines, fillOpacity=0.4) %>%
-          addPopups(cords$lon_to[1:nrow(cords)], cords$lat_to[1:nrow(cords)], pop)
+	if ("INTEGER OPTIMAL SOLUTION FOUND" %in% glpsol){
+		lon_from <- c()
+		lat_from <- c()
+		lon_to <- c()
+		lat_to <- c()
+		for (i in cords$From){
+		  lat_from <- c(lat_from, zipdata[which(zipdata$From == i), ]$From_latitude[1])
+		  lon_from <- c(lon_from, zipdata[which(zipdata$From == i), ]$From_longitude[1])
+		}
+		for (i in cords$To){
+		  lat_to <- c(lat_to, zipdata[which(zipdata$From == i), ]$From_latitude[1])
+		  lon_to <- c(lon_to, zipdata[which(zipdata$From == i), ]$From_longitude[1])
+		}
+		cords$lon_from <- lon_from
+		cords$lat_from <- lat_from
+		cords$lon_to <- lon_to
+		cords$lat_to <- lat_to
+		remove(lon_from)
+		remove(lat_from)
+		remove(lon_to)
+		remove(lat_to)
+		lng <- cords$lon_from
+		lat <- cords$lat_from
+		progress$inc(1/10, detail = paste("In progress...", 10))
+		shinyalert(paste("Total price:", optimal_cost$total_cost, "EUR"), "Now you can go and book your trip!", type = "info")        
+		# Update map
+		
+		geo_lines <- gcIntermediate(matrix(c(cords$lon_from, cords$lat_from), ncol=2),
+		                            matrix(c(cords$lon_to, cords$lat_to), ncol=2),
+		                            n=50, 
+		                            addStartEnd=TRUE,
+			                    sp=TRUE)
+		pop <- c()
+		for (row in 1:nrow(cords)) {
+		  pop <- c(pop, as.character(tagList(tags$h4(row, "City:", as.character(zipdata[zipdata[, 'From'] == factor(cords[row, ]$To, levels=levels(zipdata$From)), ]$From_city)),
+		                                     # tags$h5("Cost: ", cords[row, ]$cost, " EUR"),
+		                                     sprintf("Airport: %s", as.character(zipdata[zipdata[, 'From'] == factor(cords[row, ]$To, levels=levels(zipdata$From)), ]$From_airport_name)),
+		                             tags$br())))
+		}
+
+		leafletProxy("map", data = zipdata) %>%
+		  clearShapes() %>%
+		  addPolylines(data=geo_lines, fillOpacity=0.4) %>%
+		  addPopups(cords$lon_to[1:nrow(cords)], cords$lat_to[1:nrow(cords)], pop)
+	} else {
+	        shinyalert(paste("We cannot find a trip that meets your requirements. Try again with different parameters."), type = "info")
+		progress$inc(1/10, detail = paste("In progress...", 10))
+
+	}
       }
       
       
