@@ -3,7 +3,7 @@ library(shinyalert)
 
 # Choices for drop-downs
 vars <- cities_names
-algorithms <- c('ama', 'milosh')
+algorithms <- c('Option_1', 'Option_2')
 
 navbarPage("Trip search optimalizator", id="nav",
 

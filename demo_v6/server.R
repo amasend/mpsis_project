@@ -104,7 +104,7 @@ function(input, output, session) {
       progress$set(message = "Generating graph...", value = 0)
       progress$inc(1/10, detail = paste("In progress...", 1))
       
-      if (input$algorithm == 'ama'){
+      if (input$algorithm == 'Option_1'){
         cmd <- paste("python generate_graf.py", input$price_threshold, input$maximum_cities, input$time_in_city,
                      cityFrom$city, input$year, input$month, input$day)
         system(cmd, intern = TRUE)
