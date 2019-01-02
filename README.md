@@ -6,7 +6,7 @@ Some features need to be implemented. Application is under development.
 # Usage
 App is inside of docker contener.
 Download contener and run it by typing:  
-docker run -p 3838:3838 amasend/shinyapp:version5  
+docker run -p 3838:3838 amasend/shinyapp:version6  
 Then go to:  
 http://localhost:3838/mpsis_project/demo_v6/  
 App should load to your browser.
